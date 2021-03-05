@@ -1,0 +1,44 @@
+#by sorting array(O(nlogn))
+public static int kthSmallest(int[] arr, int low,
+                                  int high, int k)
+    {
+        // Sort the given array
+        Arrays.sort(arr);
+ 
+        // Return k'th element in
+        // the sorted array
+        return arr[k - 1];
+    }
+
+
+#quick select alogorithm(O(n) average  and O(n^2) in worst)
+   public static int partition(int arr[],int low,int high){
+    int pivot=arr[high],i=low;
+    for (int j=low;j<high;j++){
+        if (arr[j]<pivot){
+            int temp=arr[j];
+            arr[j]=arr[i];
+            arr[i]=temp;
+            i+=1;
+        }
+    }
+    int temp=arr[high];
+    arr[high]=arr[i];
+    arr[i]=temp;
+    
+    return i;
+}
+
+public static int kthSmallest(int[] arr, int l, int r, int k) 
+{   
+    if (k<=r-l+1 && k>0){
+        int partition = partition(arr, l, r);
+        if (partition-1 == k - 1)
+            return arr[partition];
+        if (partition < k - 1)
+            return kthSmallest(arr, partition + 1, r, k);
+        else
+            return kthSmallest(arr, l, partition - 1, k);
+    }
+    return Integer.MAX_VALUE;
+}
